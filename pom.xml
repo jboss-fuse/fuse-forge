@@ -13,69 +13,64 @@
   ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
   ~  implied.  See the License for the specific language governing
   ~  permissions and limitations under the License.
-  --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>org.jboss.fuse.forge.addon</groupId>
   <artifactId>fuse-forge</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-  <build>
-    <finalName>fuse-forge</finalName>
-    <plugins>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.6</version>
-        <executions>
-          <execution>
-            <id>create-forge-addon</id>
-            <phase>package</phase>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-            <configuration>
-              <classifier>forge-addon</classifier>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+
   <properties>
-    <version.furnace>2.23.4.Final</version.furnace>
-    <version.forge>3.2.2.Final</version.forge>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <slf4j-api.version>1.7.12</slf4j-api.version>
-  </properties>
-  <profiles>
-    <profile>
-      <id>release</id>
-      <activation />
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.jboss.forge.furnace</groupId>
-            <artifactId>furnace-maven-plugin</artifactId>
-            <version>${version.furnace}</version>
-            <executions>
-              <execution>
-                <id>generate-dot</id>
-                <phase>prepare-package</phase>
-                <goals>
-                  <goal>generate-dot</goal>
-                </goals>
-                <configuration>
-                  <attach>true</attach>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
-  <dependencies>
 
+    <forge.version>3.2.2.Final</forge.version>
+    <furnace.version>2.23.4.Final</furnace.version>
+    <jboss.javaee.version>3.0.3.Final</jboss.javaee.version>
+    <slf4j.version>1.7.12</slf4j.version>
+
+    <!-- Maven plugins -->
+    <jar.maven.plugin.version>3.0.2</jar.maven.plugin.version>
+    <license.maven.plugin.version>3.0</license.maven.plugin.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.jboss.forge</groupId>
+        <artifactId>forge-bom</artifactId>
+        <version>${forge.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.spec</groupId>
+        <artifactId>jboss-javaee-6.0</artifactId>
+        <version>${jboss.javaee.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.forge.furnace.test</groupId>
+        <artifactId>arquillian-furnace-classpath</artifactId>
+        <version>${furnace.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.forge.furnace.test</groupId>
+        <artifactId>furnace-test-harness</artifactId>
+        <version>${furnace.version}</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
     <!-- forge provided -->
     <dependency>
       <groupId>org.jboss.forge.addon</groupId>
@@ -85,67 +80,62 @@
 
     <!--forge addons -->
     <dependency>
+      <groupId>org.jboss.forge.furnace.container</groupId>
+      <artifactId>cdi</artifactId>
+      <classifier>forge-addon</classifier>
+      <version>${furnace.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>org.jboss.forge.addon</groupId>
       <artifactId>maven</artifactId>
       <classifier>forge-addon</classifier>
-      <version>${version.forge}</version>
+      <version>${forge.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.forge.addon</groupId>
       <artifactId>maven-impl-projects</artifactId>
-      <version>${version.forge}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.forge.furnace.container</groupId>
-      <artifactId>cdi</artifactId>
-      <classifier>forge-addon</classifier>
-      <version>${version.furnace}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.forge.addon</groupId>
-      <artifactId>ui</artifactId>
-      <classifier>forge-addon</classifier>
-      <version>${version.forge}</version>
+      <version>${forge.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.forge.addon</groupId>
       <artifactId>parser-java</artifactId>
       <classifier>forge-addon</classifier>
-      <version>${version.forge}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.forge.addon</groupId>
-      <artifactId>shell</artifactId>
-      <classifier>forge-addon</classifier>
-      <version>${version.forge}</version>
+      <version>${forge.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.forge.addon</groupId>
       <artifactId>projects</artifactId>
       <classifier>forge-addon</classifier>
-      <version>${version.forge}</version>
+      <version>${forge.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.forge.addon</groupId>
+      <artifactId>shell</artifactId>
+      <classifier>forge-addon</classifier>
+      <version>${forge.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.forge.addon</groupId>
       <artifactId>templates</artifactId>
       <classifier>forge-addon</classifier>
-      <version>${version.forge}</version>
+      <version>${forge.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.forge.addon</groupId>
+      <artifactId>ui</artifactId>
+      <classifier>forge-addon</classifier>
+      <version>${forge.version}</version>
       <scope>provided</scope>
     </dependency>
 
     <!-- testing -->
-    <dependency>
-      <groupId>org.jboss.forge.furnace.test</groupId>
-      <artifactId>furnace-test-harness</artifactId>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>org.jboss.forge.addon</groupId>
       <artifactId>ui-test-harness</artifactId>
@@ -164,41 +154,98 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.jboss.forge.furnace.test</groupId>
+      <artifactId>furnace-test-harness</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>${slf4j-api.version}</version>
+      <version>${slf4j.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.jboss.forge</groupId>
-        <artifactId>forge-bom</artifactId>
-        <version>${version.forge}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.jboss.spec</groupId>
-        <artifactId>jboss-javaee-6.0</artifactId>
-        <version>3.0.3.Final</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.jboss.forge.furnace.test</groupId>
-        <artifactId>furnace-test-harness</artifactId>
-        <version>2.23.4.Final</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.jboss.forge.furnace.test</groupId>
-        <artifactId>arquillian-furnace-classpath</artifactId>
-        <version>2.23.4.Final</version>
-        <scope>test</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
+  <build>
+    <finalName>fuse-forge</finalName>
+    <plugins>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>${jar.maven.plugin.version}</version>
+        <executions>
+          <execution>
+            <id>create-forge-addon</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <classifier>forge-addon</classifier>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>release</id>
+      <activation/>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jboss.forge.furnace</groupId>
+            <artifactId>furnace-maven-plugin</artifactId>
+            <version>${furnace.version}</version>
+            <executions>
+              <execution>
+                <id>generate-dot</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>generate-dot</goal>
+                </goals>
+                <configuration>
+                  <attach>true</attach>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>license</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.mycila</groupId>
+            <artifactId>license-maven-plugin</artifactId>
+            <version>${license.maven.plugin.version}</version>
+            <configuration>
+              <includes>
+                <include>src/main/java/**</include>
+                <include>src/test/java/**</include>
+                <include>pom.xml</include>
+                <include>**/*.xml</include>
+                <include>**/*.cfg</include>
+                <include>**/*.properties</include>
+              </includes>
+              <excludes>
+                <exclude>**/.*/**</exclude>
+                <exclude>**/templates/**</exclude>
+              </excludes>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

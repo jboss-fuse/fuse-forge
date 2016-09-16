@@ -39,7 +39,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
-public class ProjectSetupTest {
+public class CdkProjectSetupTest {
 
     private static final String[] EXCLUDE_NAMES = new String[]{
         "excludeConfigNames",

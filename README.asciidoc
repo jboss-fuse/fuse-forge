@@ -1,23 +1,48 @@
-== fuse-forge
+== JBoss Fuse Forge Addon
 :idprefix: id_ 
-(choose one, do not modify, then add a second sentence with a brief description, starting with - "The fuse-forge addon enables blah blah...)
-This addon provides *standalone* functionality, and *exports services* for use in other addons. 
-This addon provides *standalone* functionality.
-This addon *exports services* for use in other addons. 
-This addon *provides classes* for use in other addons. 
-This addon is a 'Furnace container' that provides *lifecycle* and *service registry* support for dependent addons.
-        
-=== Dependencies: None (or)
+The JBoss Fuse addon adds the following capabilities to JBoss Forge:
+
+* Creation of new Jboss Fuse projects
+* Camel component development kit
+
 === Depends on
+
 [options="header"]
 |===
 |Addon |Exported |Optional
-|DEP1
-|yes
+
+|cdi
 |no
-|DEP2
-|yes
-|yes
+|no
+
+|maven
+|no
+|no
+
+|parser-java
+|no
+|no
+
+|parser-xml
+|no
+|no
+
+|projects
+|no
+|no
+
+|shell
+|no
+|no
+
+|templates
+|no
+|no
+
+|ui
+|no
+|no
+
 |===
 
 == Setup
@@ -37,29 +62,42 @@ To use this addon, you must add it as a dependency in the *pom.xml* of your `for
    <version>${version}</version>
 </dependency>
 ----
+
 == Features
-ABCFactory for simple ABC blah:: 
-Allows for blah blah
-+
-[source,java]
+
+==== Create a new JBoss Fuse project
+
+To create a new JBoss Fuse, use the following command:
+
+[source]
 ----
-@Inject private ABCFactory factory;
-ABC abc = factory.createABC();
+project-new --named my-fuse-project --type fuse
 ----
-+
-[TIP] 
-====
-If your addon uses a container that does not support "@Inject" annotations, services such as the `ABCFactory` may also be 
-accessed via the `AddonRegistry`:
+
+
+==== Camel Component Development Kit
+
+To setup an existing project for use with the Camel Component Development kit:
+
+[source]
 ----
-Imported<ABCFactory> imported = addonRegistry.getServices(ABCFactory.class);
-ABCFactory factory = imported.get();
+api-component-setup
 ----
-==== 
-Creating a new XYZ instance:: 
-Causes XYZ to occur
-+
-[source,java]
+
+The following commands will then become available for you to add & configure APIs:
+
+[source]
 ----
-XYZ xyz = factory.createXYZ();
+api-component-add-alias
+api-component-add-extra-option
+api-component-exclude-config-names
+api-component-exclude-javadoc-methods
+api-component-add-api
+api-component-add-nullable-option
+api-component-exclude-config-types
+api-component-exclude-javadoc-packages
+api-component-add-config-to-generate-from-javadoc
+api-component-add-substitution
+api-component-exclude-javadoc-classes
+api-component-include-javadoc-static-methods
 ----
