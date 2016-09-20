@@ -35,7 +35,6 @@ public class ArchetypeVersionCompleter implements UICompleter<String> {
     public Iterable<String> getCompletionProposals(UIContext context, InputComponent<?, String> input, String value) {
         return archetypeVersions.stream()
             .filter(a -> a.startsWith(value))
-            .sorted((o1, o2) -> o1.compareTo(o2))
             .collect(Collectors.toList());
     }
 }
