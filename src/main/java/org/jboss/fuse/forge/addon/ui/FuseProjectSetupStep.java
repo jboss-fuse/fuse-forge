@@ -203,10 +203,10 @@ public class FuseProjectSetupStep extends AbstractUICommand implements UIWizardS
             if (source == null) {
                 return null;
             }
-            return source.getGroupId() + ":" + source.getArtifactId() + ":" + source.getVersion();
+            return source.getDescription() != null ? source.getDescription() : MavenUtils.formatArchetypeGav(source);
         }).setDescription(() -> {
             Archetype value = archetype.getValue();
-            return value == null ? null : value.getDescription();
+            return value == null ? null : MavenUtils.formatArchetypeGav(value);
         });
 
         ArchetypeCatalog archetypeCatalog = getCatalog();
