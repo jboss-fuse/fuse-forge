@@ -58,6 +58,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FuseProjectSetupStep extends AbstractUICommand implements UIWizardStep {
 
@@ -150,10 +151,9 @@ public class FuseProjectSetupStep extends AbstractUICommand implements UIWizardS
     }
 
     private void configureProjectTypeInput() {
-        Set<String> types = new LinkedHashSet<>();
-        for (FuseProjectCategory category : FuseProjectCategory.values()) {
-            types.add(category.getName());
-        }
+        Set<String> types = Stream.of(FuseProjectCategory.values())
+            .map(FuseProjectCategory::getName)
+            .collect(Collectors.toCollection(LinkedHashSet::new));
 
         fuseProjectType.setValueChoices(types);
         fuseProjectType.addValueChangeListener(valueChangeEvent -> {
@@ -185,10 +185,10 @@ public class FuseProjectSetupStep extends AbstractUICommand implements UIWizardS
             archetype.setValueChoices(() -> {
                 Set<Archetype> result = new LinkedHashSet<>();
                 if (isValidVersion(version)) {
-                    ArchetypeCatalog archetypes = getCatalog();
-                    if (archetypes != null) {
-                        List<Archetype> list = archetypes.getArchetypes();
-                        result.addAll(list.stream()
+                    ArchetypeCatalog archetypeCatalog = getCatalog();
+                    if (archetypeCatalog != null) {
+                        List<Archetype> archetypes = archetypeCatalog.getArchetypes();
+                        result.addAll(archetypes.stream()
                             .filter(archetype -> isValidArchetype(archetype, fuseProjectType.getValue()))
                             .collect(Collectors.toList()));
                     }
@@ -209,11 +209,11 @@ public class FuseProjectSetupStep extends AbstractUICommand implements UIWizardS
             return value == null ? null : value.getDescription();
         });
 
-        ArchetypeCatalog archetypes = getCatalog();
-        if (archetypes != null) {
+        ArchetypeCatalog archetypeCatalog = getCatalog();
+        if (archetypeCatalog != null) {
             Set<Archetype> result = new LinkedHashSet<>();
-            List<Archetype> list = archetypes.getArchetypes();
-            result.addAll(list.stream()
+            List<Archetype> archetypes = archetypeCatalog.getArchetypes();
+            result.addAll(archetypes.stream()
                     .filter(archetype -> isValidArchetype(archetype, null))
                     .collect(Collectors.toList()));
             archetype.setValueChoices(result);
@@ -265,8 +265,13 @@ public class FuseProjectSetupStep extends AbstractUICommand implements UIWizardS
 
     private String getLatestCatalogVersion() {
         if (Strings.isNullOrEmpty(latestCatalogVersion)) {
-            Coordinate coordinate = MavenUtils.createCoordinate(ARCHETYPE_CATALOG_GROUP_ID, ARCHETYPE_CATALOG_ARTIFACT_ID);
-            latestCatalogVersion = MavenUtils.resolveLatestRedhatVersion(resolver, coordinate);
+            Stream<String> stream = archetypeVersions.stream()
+                .filter(v -> !MavenUtils.isRedhatVersion(v));
+
+            latestCatalogVersion = archetypeVersions.stream()
+                .filter(MavenUtils::isRedhatVersion)
+                .reduce((a, b) -> b)
+                .orElse(stream.reduce((a,b) -> b).orElseThrow(IllegalStateException::new));
         }
         return latestCatalogVersion;
     }
