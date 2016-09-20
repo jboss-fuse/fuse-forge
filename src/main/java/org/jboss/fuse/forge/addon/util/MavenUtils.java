@@ -15,6 +15,7 @@
  */
 package org.jboss.fuse.forge.addon.util;
 
+import org.apache.maven.archetype.catalog.Archetype;
 import org.jboss.forge.addon.dependencies.Coordinate;
 import org.jboss.forge.addon.dependencies.Dependency;
 import org.jboss.forge.addon.dependencies.DependencyResolver;
@@ -92,5 +93,13 @@ public class MavenUtils {
 
     public static Coordinate createCoordinate(String groupId, String artifactId) {
         return createCoordinate(groupId, artifactId, null, null);
+    }
+
+    public static String formatArchetypeGav(Archetype archetype) {
+        if (archetype == null) {
+            return "";
+        }
+
+        return String.format("%s:%s:%s", archetype.getGroupId(), archetype.getArtifactId(), archetype.getVersion());
     }
 }
