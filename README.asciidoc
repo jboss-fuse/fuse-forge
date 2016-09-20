@@ -63,6 +63,17 @@ To use this addon, you must add it as a dependency in the *pom.xml* of your `for
 </dependency>
 ----
 
+=== Installation
+
+To install from the JBoss Forge CLI run:
+
+[source]
+----
+addon-install --coordinate org.jboss.fuse.forge.addon:fuse-forge,1.0.0
+----
+
+To find the latest version number, you can browse the list of https://github.com/jboss-fuse/fuse-forge/releases[releases].
+
 == Features
 
 ==== Create a new JBoss Fuse project
