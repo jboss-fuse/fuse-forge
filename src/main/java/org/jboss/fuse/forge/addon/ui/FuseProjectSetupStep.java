@@ -104,7 +104,7 @@ public class FuseProjectSetupStep extends AbstractUICommand implements UIWizardS
         configureCatalogVersionInput();
         configureArchetypeInput();
 
-        builder.add(fuseProjectType).add(catalogVersion).add(archetype);
+        builder.add(catalogVersion).add(fuseProjectType).add(archetype);
     }
 
     @Override
