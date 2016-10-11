@@ -141,7 +141,30 @@ public class FuseProjectSetupStep extends AbstractUICommand implements UIWizardS
         File fileRoot = project.getRoot().reify(DirectoryResource.class).getUnderlyingResourceObject();
 
         ArchetypeHelper archetypeHelper = new ArchetypeHelper(artifact.getResourceInputStream(), fileRoot, metadataFacet.getProjectGroupName(),
-            metadataFacet.getProjectName(), metadataFacet.getProjectVersion());
+            metadataFacet.getProjectName(), metadataFacet.getProjectVersion()) {
+
+            // See: OSFUSE-349, until  super.removeInvalidHeaderCommentsAndProcessVelocityMacros actually
+            // does full velocity processing, patch support for the `#set( $H = '##' )` velocity macro
+            // that the archetypes are using.
+            @Override
+            protected String removeInvalidHeaderCommentsAndProcessVelocityMacros(String text) {
+                String answer = "";
+                for (String line : text.split("\r?\n")) {
+                    String l = line.trim();
+                    if (l.startsWith("##") || l.startsWith("#set(")) {
+                        continue; // skip over the preprocessor controls..
+                    }
+                    if (line.contains("${D}")) {
+                        line = line.replaceAll("\\$\\{D\\}", "\\$");
+                    }
+                    if (line.contains("${H}")) {
+                        line = line.replaceAll("\\$\\{H\\}", "##");
+                    }
+                    answer = answer + line + "\n";
+                }
+                return answer;
+            }
+        };
 
         JavaSourceFacet facet = project.getFacet(JavaSourceFacet.class);
         archetypeHelper.setPackageName(facet.getBasePackage());
