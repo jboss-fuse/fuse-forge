@@ -39,6 +39,28 @@
     <license.maven.plugin.version>3.0</license.maven.plugin.version>
   </properties>
 
+  <distributionManagement>
+    <repository>
+        <id>sonatype-nexus-staging</id>
+        <name>Sonatype Staging Repository</name>
+        <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+    </repository>
+    <snapshotRepository>
+        <id>sonatype-nexus-snapshots</id>
+        <name>Sonatype Snapshot Repository</name>
+        <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+  
+  <scm>
+    <connection>scm:git:https://github.com/jboss-fuse/fuse-forge.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com:jboss-fuse/fuse-forge.git</developerConnection>
+    <url>https://github.com/jboss-fuse/fuse-forge</url>
+    <tag>HEAD</tag>
+  </scm>
+
+
   <dependencyManagement>
     <dependencies>
       <dependency>
