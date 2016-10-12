@@ -21,7 +21,7 @@
 
   <groupId>org.jboss.fuse.forge.addon</groupId>
   <artifactId>fuse-forge</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0.fuse-000001</version>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
