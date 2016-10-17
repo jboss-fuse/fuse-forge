@@ -38,6 +38,9 @@ import org.junit.runner.RunWith;
 import javax.inject.Inject;
 import java.io.File;
 
+import static org.jboss.fuse.forge.addon.ui.FuseProjectCategory.KARAF;
+import static org.jboss.fuse.forge.addon.ui.FuseProjectCategory.SPRING_BOOT;
+
 @RunWith(Arquillian.class)
 public class FuseProjectSetupStepTest {
 
@@ -76,12 +79,12 @@ public class FuseProjectSetupStepTest {
 
     @Test
     public void testNewFuseSpringBootProject() throws Exception {
-        testNewFuseProject(FuseProjectCategory.SPRING_BOOT);
+        testNewFuseProject(SPRING_BOOT);
     }
 
     @Test
     public void testNewFuseKarafProject() throws Exception {
-        testNewFuseProject(FuseProjectCategory.KARAF);
+        testNewFuseProject(KARAF);
     }
 
     @SuppressWarnings("unchecked")
@@ -105,7 +108,7 @@ public class FuseProjectSetupStepTest {
             UISelectOne<Archetype> archetypeSelectionInput = (UISelectOne) archetypeSelection.getInput("archetype");
             Iterable<Archetype> archetypes = archetypeSelectionInput.getValueChoices();
 
-            String expectedArchetype = category.equals(FuseProjectCategory.SPRING_BOOT) ? "spring-boot" : "jboss-fuse";
+            String expectedArchetype = category.equals(SPRING_BOOT) ? SPRING_BOOT.getArtifactIdPrefix() : KARAF.getArtifactIdPrefix();
 
             for (Archetype archetype : archetypes) {
                 Assert.assertTrue(archetype.getArtifactId().contains(expectedArchetype));

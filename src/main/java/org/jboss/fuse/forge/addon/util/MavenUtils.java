@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 
 public class MavenUtils {
 
-    private static final Pattern REDHAT_VERSION_PATTERN = Pattern.compile("^.*\\.redhat-.*$");
+    private static final Pattern REDHAT_VERSION_PATTERN = Pattern.compile("^.*\\.(redhat|fuse)-.*$");
     private static final String[] BANNED_VERSIONS = {"2.2.0.redhat-053", "2.2.0.redhat-066", "2.2.0.redhat-073", "2.2.0.redhat-079"};
 
     public static List<String> resolveVersions(DependencyResolver resolver, Coordinate coordinate) {
