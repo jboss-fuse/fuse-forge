@@ -60,6 +60,9 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.jboss.fuse.forge.addon.ui.FuseProjectCategory.KARAF;
+import static org.jboss.fuse.forge.addon.ui.FuseProjectCategory.SPRING_BOOT;
+
 public class FuseProjectSetupStep extends AbstractUICommand implements UIWizardStep {
 
     private static final String ARCHETYPE_CATALOG_GROUP_ID = "io.fabric8.archetypes";
@@ -85,7 +88,6 @@ public class FuseProjectSetupStep extends AbstractUICommand implements UIWizardS
     private UISelectOne<Archetype> archetype;
 
     private List<String> archetypeVersions;
-    private ArchetypeCatalog cachedCatalog;
     private String latestCatalogVersion;
 
     @Override
@@ -184,13 +186,12 @@ public class FuseProjectSetupStep extends AbstractUICommand implements UIWizardS
             archetype.setValueChoices(() -> {
                 Set<Archetype> result = new LinkedHashSet<>();
                 if (isValidVersion(catalogVersion.getValue())) {
-                    ArchetypeCatalog archetypeCatalog = cachedCatalog == null ? getCatalog() : cachedCatalog;
+                    ArchetypeCatalog archetypeCatalog = getCatalog();
                     if (archetypeCatalog != null) {
                         List<Archetype> archetypes = archetypeCatalog.getArchetypes();
                         result.addAll(archetypes.stream()
                             .filter(archetype -> isValidArchetype(archetype, newValue))
                             .collect(Collectors.toList()));
-                        cachedCatalog = archetypeCatalog;
                     }
                 }
                 return result;
@@ -250,11 +251,12 @@ public class FuseProjectSetupStep extends AbstractUICommand implements UIWizardS
                 return true;
             }
 
-            if (projectType.equals(FuseProjectCategory.KARAF.getName()) && archetype.getArtifactId().startsWith("jboss-fuse")) {
+            String artifactId = archetype.getArtifactId();
+            if (projectType.equals(KARAF.getName()) && artifactId.startsWith(KARAF.getArtifactIdPrefix())) {
                 return true;
             }
 
-            if (projectType.equals(FuseProjectCategory.SPRING_BOOT.getName()) && archetype.getArtifactId().contains("spring-boot")) {
+            if (projectType.equals(SPRING_BOOT.getName()) && artifactId.contains(SPRING_BOOT.getArtifactIdPrefix())) {
                 return true;
             }
         }
