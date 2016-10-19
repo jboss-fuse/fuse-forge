@@ -18,7 +18,6 @@ package org.jboss.fuse.forge.addon.ui;
 import org.apache.maven.archetype.catalog.Archetype;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.forge.addon.dependencies.DependencyResolver;
 import org.jboss.forge.addon.projects.ui.NewProjectWizard;
 import org.jboss.forge.addon.ui.controller.WizardCommandController;
 import org.jboss.forge.addon.ui.input.UISelectOne;
@@ -29,6 +28,8 @@ import org.jboss.forge.arquillian.archive.AddonArchive;
 import org.jboss.forge.furnace.repositories.AddonDependencyEntry;
 import org.jboss.fuse.forge.addon.project.FuseProjectType;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,9 +51,6 @@ public class FuseProjectSetupStepTest {
     @Inject
     private UITestHarness testHarness;
 
-    @Inject
-    private DependencyResolver resolver;
-
     @Deployment
     @AddonDependencies({
         @AddonDependency(name = "org.jboss.forge.addon:maven"),
@@ -64,6 +62,10 @@ public class FuseProjectSetupStepTest {
     })
 
     public static AddonArchive getDeployment() {
+        JavaArchive catalog = ShrinkWrap.create(JavaArchive.class, "archetypes-catalog")
+            .addAsResource("archetype-catalog.xml", "archetype-catalog.xml");
+        catalog.as(ZipExporter.class).exportTo(new File("target/archetypes-catalog.jar"), true);
+
         return ShrinkWrap.create(AddonArchive.class)
             .addBeansXML()
             .addAsAddonDependencies(
@@ -74,7 +76,7 @@ public class FuseProjectSetupStepTest {
                 AddonDependencyEntry.create("org.jboss.forge.addon:projects"),
                 AddonDependencyEntry.create("org.jboss.forge.addon:maven"),
                 AddonDependencyEntry.create("org.jboss.fuse.forge.addon:fuse-forge")
-            );
+            ).addClasses(MockCatalogDependencyResolver.class);
     }
 
     @Test
@@ -103,16 +105,22 @@ public class FuseProjectSetupStepTest {
             Assert.assertTrue(wizard.canMoveToNextStep());
             WizardCommandController archetypeSelection = wizard.next();
 
+            archetypeSelection.setValueFor("catalogVersion", "1.0.0");
             archetypeSelection.setValueFor("fuseProjectType", category.getName());
 
             UISelectOne<Archetype> archetypeSelectionInput = (UISelectOne) archetypeSelection.getInput("archetype");
             Iterable<Archetype> archetypes = archetypeSelectionInput.getValueChoices();
 
             String expectedArchetype = category.equals(SPRING_BOOT) ? SPRING_BOOT.getArtifactIdPrefix() : KARAF.getArtifactIdPrefix();
+            int archetypeCount = 0;
 
             for (Archetype archetype : archetypes) {
+                archetypeCount += 1;
                 Assert.assertTrue(archetype.getArtifactId().contains(expectedArchetype));
             }
+
+            // 8 archetypes are in the catalog, but we expect that 2 will be filtered out
+            Assert.assertEquals(6, archetypeCount);
 
             archetypeSelectionInput.setValue(archetypes.iterator().next());
 

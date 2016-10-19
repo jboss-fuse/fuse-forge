@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-catalog xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-catalog/1.0.0"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-catalog/1.0.0 http://maven.apache.org/xsd/archetype-catalog-1.0.0.xsd">
+  <archetypes>
+    <!-- Community versions-->
+    <archetype>
+      <groupId>io.fabric8.archetypes</groupId>
+      <artifactId>karaf-camel-log-archetype</artifactId>
+      <version>1.0.0</version>
+      <description>Creates a new Camel Log Example</description>
+    </archetype>
+    <archetype>
+      <groupId>io.fabric8.archetypes</groupId>
+      <artifactId>karaf-camel-rest-sql-archetype</artifactId>
+      <version>1.0.0</version>
+      <description>Creates a new Camel Example using Rest DSL with SQL Database</description>
+    </archetype>
+    <archetype>
+      <groupId>io.fabric8.archetypes</groupId>
+      <artifactId>karaf-camel-amq-archetype</artifactId>
+      <version>1.0.0</version>
+      <description>Creates a new ActiveMQ and Camel Example</description>
+    </archetype>
+    <archetype>
+      <groupId>io.fabric8.archetypes</groupId>
+      <artifactId>spring-boot-camel-drools-archetype</artifactId>
+      <version>1.0.0</version>
+      <description>Creates a new Camel and Drools example with Spring Boot in the Java Container</description>
+    </archetype>
+    <archetype>
+      <groupId>io.fabric8.archetypes</groupId>
+      <artifactId>spring-boot-camel-archetype</artifactId>
+      <version>1.0.0</version>
+      <description>Creates a new Shows how to use Camel with Spring Boot in the Java Container</description>
+    </archetype>
+    <archetype>
+      <groupId>io.fabric8.archetypes</groupId>
+      <artifactId>spring-boot-camel-amqs-archetype</artifactId>
+      <version>1.0.0</version>
+      <description>Creates a new Camel example with Spring Boot that connects to the fabric8 JMS broker</description>
+    </archetype>
+
+    <!-- Red Hat versions -->
+    <archetype>
+      <groupId>org.jboss.fuse.fis.archetypes</groupId>
+      <artifactId>karaf-camel-log-archetype</artifactId>
+      <version>1.0.0.redhat-000001</version>
+      <description>Creates a new Camel Log Example</description>
+    </archetype>
+    <archetype>
+      <groupId>org.jboss.fuse.fis.archetypes</groupId>
+      <artifactId>karaf-camel-rest-sql-archetype</artifactId>
+      <version>1.0.0.redhat-000001</version>
+      <description>Creates a new Camel Example using Rest DSL with SQL Database</description>
+    </archetype>
+    <archetype>
+      <groupId>org.jboss.fuse.fis.archetypes</groupId>
+      <artifactId>karaf-camel-amq-archetype</artifactId>
+      <version>1.0.0.redhat-000001</version>
+      <description>Creates a new ActiveMQ and Camel Example</description>
+    </archetype>
+    <archetype>
+      <groupId>org.jboss.fuse.fis.archetypes</groupId>
+      <artifactId>spring-boot-camel-drools-archetype</artifactId>
+      <version>1.0.0.redhat-000001</version>
+      <description>Creates a new Camel and Drools example with Spring Boot in the Java Container</description>
+    </archetype>
+    <archetype>
+      <groupId>org.jboss.fuse.fis.archetypes</groupId>
+      <artifactId>spring-boot-camel-archetype</artifactId>
+      <version>1.0.0.redhat-000001</version>
+      <description>Creates a new Shows how to use Camel with Spring Boot in the Java Container</description>
+    </archetype>
+    <archetype>
+      <groupId>org.jboss.fuse.fis.archetypes</groupId>
+      <artifactId>spring-boot-camel-amqs-archetype</artifactId>
+      <version>1.0.0.redhat-000001</version>
+      <description>Creates a new Camel example with Spring Boot that connects to the fabric8 JMS broker</description>
+    </archetype>
+
+    <!-- Invalid group ids -->
+    <archetype>
+      <groupId>org.invalid</groupId>
+      <artifactId>karaf-camel-rest-sql-archetype</artifactId>
+      <version>1.0.0</version>
+      <description>Creates a new Camel Example using Rest DSL with SQL Database</description>
+    </archetype>
+    <archetype>
+      <groupId>org.invalid</groupId>
+      <artifactId>spring-boot-camel-amqs-archetype</artifactId>
+      <version>1.0.0</version>
+      <description>Creates a new Camel example with Spring Boot that connects to the fabric8 JMS broker</description>
+    </archetype>
+  </archetypes>
+</archetype-catalog>

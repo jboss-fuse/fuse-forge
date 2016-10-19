@@ -17,7 +17,7 @@ package org.jboss.fuse.forge.addon.ui;
 
 public enum FuseProjectCategory {
     SPRING_BOOT("Spring Boot", "spring-boot"),
-    KARAF("Karaf", "jboss-fuse");
+    KARAF("Karaf", "karaf");
 
     private final String name;
     private final String artifactIdPrefix;
