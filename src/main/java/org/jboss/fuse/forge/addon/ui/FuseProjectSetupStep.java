@@ -65,8 +65,8 @@ import static org.jboss.fuse.forge.addon.ui.FuseProjectCategory.SPRING_BOOT;
 
 public class FuseProjectSetupStep extends AbstractUICommand implements UIWizardStep {
 
-    private static final String ARCHETYPE_CATALOG_GROUP_ID = "io.fabric8.archetypes";
-    private static final String ARCHETYPE_CATALOG_ARTIFACT_ID = "archetypes-catalog";
+    public static final String ARCHETYPE_CATALOG_GROUP_ID = "io.fabric8.archetypes";
+    public static final String ARCHETYPE_CATALOG_ARTIFACT_ID = "archetypes-catalog";
     private static final Logger LOG = Logger.getLogger(FuseProjectSetupStep.class.getName());
 
     @Inject
