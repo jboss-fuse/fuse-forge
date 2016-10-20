@@ -29,8 +29,8 @@ import org.jboss.forge.addon.resource.Resource;
 import org.jboss.forge.addon.resource.ResourceFactory;
 import org.jboss.fuse.forge.addon.util.MavenUtils;
 
+import javax.annotation.Priority;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +40,7 @@ import java.util.Set;
 import static org.jboss.fuse.forge.addon.ui.FuseProjectSetupStep.ARCHETYPE_CATALOG_ARTIFACT_ID;
 import static org.jboss.fuse.forge.addon.ui.FuseProjectSetupStep.ARCHETYPE_CATALOG_GROUP_ID;
 
-@Singleton
+@Priority(1)
 public class MockCatalogDependencyResolver implements DependencyResolver {
 
     private Coordinate catalogCoordinate = MavenUtils.createCoordinate(ARCHETYPE_CATALOG_GROUP_ID,
