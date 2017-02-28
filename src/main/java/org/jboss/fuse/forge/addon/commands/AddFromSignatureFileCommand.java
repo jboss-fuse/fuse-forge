@@ -49,9 +49,6 @@ public class AddFromSignatureFileCommand extends AbstractConfigCommand {
 
     @Override
     public Result execute(UIExecutionContext context) throws Exception {
-
-        String name = apiName.getValue();
-
         Project project = getSelectedProject(context);
         MavenPluginBuilder pluginBuilder = getPluginBuilder(project);
         ConfigurationBuilder configurationBuilder = getConfigurationBuilder(pluginBuilder);

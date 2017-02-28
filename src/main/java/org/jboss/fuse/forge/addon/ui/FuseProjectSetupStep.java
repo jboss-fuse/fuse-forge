@@ -26,7 +26,6 @@ import org.jboss.forge.addon.dependencies.builder.DependencyQueryBuilder;
 import org.jboss.forge.addon.maven.projects.archetype.ArchetypeHelper;
 import org.jboss.forge.addon.parser.java.facets.JavaSourceFacet;
 import org.jboss.forge.addon.projects.Project;
-import org.jboss.forge.addon.projects.ProjectFactory;
 import org.jboss.forge.addon.projects.facets.MetadataFacet;
 import org.jboss.forge.addon.resource.DirectoryResource;
 import org.jboss.forge.addon.resource.FileResource;
@@ -68,9 +67,6 @@ public class FuseProjectSetupStep extends AbstractUICommand implements UIWizardS
     public static final String ARCHETYPE_CATALOG_GROUP_ID = "io.fabric8.archetypes";
     public static final String ARCHETYPE_CATALOG_ARTIFACT_ID = "archetypes-catalog";
     private static final Logger LOG = Logger.getLogger(FuseProjectSetupStep.class.getName());
-
-    @Inject
-    private ProjectFactory projectFactory;
 
     @Inject
     private DependencyResolver resolver;
@@ -276,10 +272,11 @@ public class FuseProjectSetupStep extends AbstractUICommand implements UIWizardS
             try {
                 String name = dependency.getArtifact().getFullyQualifiedName();
                 URL url = new URL("file", null, name);
-                URLClassLoader classLoader = new URLClassLoader(new URL[]{url});
-                InputStream inputStream = classLoader.getResourceAsStream("archetype-catalog.xml");
-                if (inputStream != null) {
-                    return new ArchetypeCatalogXpp3Reader().read(inputStream);
+                try(URLClassLoader classLoader = new URLClassLoader(new URL[]{url})) {
+                    InputStream inputStream = classLoader.getResourceAsStream("archetype-catalog.xml");
+                    if (inputStream != null) {
+                        return new ArchetypeCatalogXpp3Reader().read(inputStream);
+                    }
                 }
             } catch (Exception e) {
                 LOG.warning("Unable to resolve archetype catalog: " + e.getMessage());

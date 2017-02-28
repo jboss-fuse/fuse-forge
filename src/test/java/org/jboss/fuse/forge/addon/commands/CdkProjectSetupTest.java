@@ -16,6 +16,7 @@
 package org.jboss.fuse.forge.addon.commands;
 
 import java.io.File;
+
 import javax.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -30,7 +31,6 @@ import org.jboss.forge.addon.ui.test.UITestHarness;
 import org.jboss.forge.arquillian.AddonDependencies;
 import org.jboss.forge.arquillian.AddonDependency;
 import org.jboss.forge.arquillian.archive.AddonArchive;
-import org.jboss.forge.furnace.addons.AddonRegistry;
 import org.jboss.forge.furnace.repositories.AddonDependencyEntry;
 import org.jboss.forge.furnace.util.OperatingSystemUtils;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -63,9 +63,6 @@ public class CdkProjectSetupTest {
 
     @Inject
     private ProjectFactory projectFactory;
-
-    @Inject
-    private AddonRegistry registry;
 
     @Deployment
     @AddonDependencies({

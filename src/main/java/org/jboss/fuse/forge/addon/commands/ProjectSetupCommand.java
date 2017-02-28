@@ -359,7 +359,7 @@ public class ProjectSetupCommand extends AbstractApiComponentCommand {
         JavaSourceFacet javaSourceFacet = getOrInstallFacet(project, JavaSourceFacet.class);
         String output = readResource(resourceTemplate);
 
-        JavaSource javaSource = Roaster.parse(JavaSource.class, output);
+        JavaSource<?> javaSource = Roaster.parse(JavaSource.class, output);
         if (!testResource) {
             javaSourceFacet.saveJavaSourceUnformatted(javaSource);
         } else {

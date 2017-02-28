@@ -52,13 +52,14 @@ public class DependencyClassCompleter implements UICompleter<String> {
             Coordinate coordinate = dependency.getCoordinate();
             // exclude camel, slf4j and log4j dependencies
             if (!EXCLUDED_GROUPS.matcher(coordinate.getGroupId()).find()) {
-                DependencyQueryBuilder queryBuilder = DependencyQueryBuilder.create(coordinate);
-                JarFile jarFile = new JarFile(dependencyResolver.resolveArtifact(queryBuilder).getArtifact().getFullyQualifiedName());
-                Enumeration<JarEntry> entries = jarFile.entries();
-                while (entries.hasMoreElements()) {
-                    JarEntry entry = entries.nextElement();
-                    if (!entry.isDirectory() && entry.getName().endsWith(".class")) {
-                        classNames.add(entry.getName().replace("/", ".").replace(".class", ""));
+            	DependencyQueryBuilder queryBuilder = DependencyQueryBuilder.create(coordinate);
+                try(JarFile jarFile = new JarFile(dependencyResolver.resolveArtifact(queryBuilder).getArtifact().getFullyQualifiedName())){
+                    Enumeration<JarEntry> entries = jarFile.entries();
+                    while (entries.hasMoreElements()) {
+                        JarEntry entry = entries.nextElement();
+                        if (!entry.isDirectory() && entry.getName().endsWith(".class")) {
+                            classNames.add(entry.getName().replace("/", ".").replace(".class", ""));
+                        }
                     }
                 }
             }
