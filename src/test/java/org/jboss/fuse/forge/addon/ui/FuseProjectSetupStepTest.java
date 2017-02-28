@@ -109,7 +109,7 @@ public class FuseProjectSetupStepTest {
             archetypeSelection.setValueFor("catalogVersion", "1.0.0");
             archetypeSelection.setValueFor("fuseProjectType", category.getName());
 
-            UISelectOne<Archetype> archetypeSelectionInput = (UISelectOne) archetypeSelection.getInput("archetype");
+            UISelectOne<Archetype> archetypeSelectionInput = (UISelectOne<Archetype>) archetypeSelection.getInput("archetype");
             Iterable<Archetype> archetypes = archetypeSelectionInput.getValueChoices();
 
             String expectedArchetype = category.equals(SPRING_BOOT) ? SPRING_BOOT.getArtifactIdPrefix() : KARAF.getArtifactIdPrefix();

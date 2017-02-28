@@ -17,7 +17,6 @@ package org.jboss.fuse.forge.addon.commands;
 
 import javax.inject.Inject;
 
-import org.jboss.forge.addon.dependencies.DependencyResolver;
 import org.jboss.forge.addon.maven.plugins.ConfigurationBuilder;
 import org.jboss.forge.addon.maven.plugins.ConfigurationElementBuilder;
 import org.jboss.forge.addon.maven.plugins.MavenPluginBuilder;
@@ -39,9 +38,6 @@ public class DeleteApiCommand extends AbstractConfigCommand {
 	@WithAttributes(label = "API Name", required = true, description = "Endpoint URI Prefix for API")
 	private UIInput<String> apiName;
 
-    @Inject
-    private DependencyResolver dependencyResolver;
-
 	@Override
 	public UICommandMetadata getMetadata(UIContext context) {
 		return Metadata.forCommand(DeleteApiCommand.class)
@@ -51,7 +47,7 @@ public class DeleteApiCommand extends AbstractConfigCommand {
 
 	@Override
 	public void initializeUI(UIBuilder builder) throws Exception {
-        Project project = getSelectedProject(builder.getUIContext());
+        getSelectedProject(builder.getUIContext());
         builder.add(apiName);
 	}
 
