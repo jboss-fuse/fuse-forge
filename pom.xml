@@ -125,14 +125,12 @@
       <groupId>org.jboss.forge.furnace.container</groupId>
       <artifactId>cdi</artifactId>
       <classifier>forge-addon</classifier>
-      <version>${furnace.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.forge.addon</groupId>
       <artifactId>maven</artifactId>
       <classifier>forge-addon</classifier>
-      <version>${forge.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -145,35 +143,30 @@
       <groupId>org.jboss.forge.addon</groupId>
       <artifactId>parser-java</artifactId>
       <classifier>forge-addon</classifier>
-      <version>${forge.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.forge.addon</groupId>
       <artifactId>projects</artifactId>
       <classifier>forge-addon</classifier>
-      <version>${forge.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.forge.addon</groupId>
       <artifactId>shell</artifactId>
       <classifier>forge-addon</classifier>
-      <version>${forge.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.forge.addon</groupId>
       <artifactId>templates</artifactId>
       <classifier>forge-addon</classifier>
-      <version>${forge.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.forge.addon</groupId>
       <artifactId>ui</artifactId>
       <classifier>forge-addon</classifier>
-      <version>${forge.version}</version>
       <scope>provided</scope>
     </dependency>
 
