@@ -47,7 +47,6 @@ import org.jboss.forge.furnace.util.Strings;
 import org.jboss.fuse.forge.addon.completer.ArchetypeVersionCompleter;
 import org.jboss.fuse.forge.addon.util.MavenUtils;
 
-import javax.inject.Inject;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
@@ -58,6 +57,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import javax.inject.Inject;
 
 import static org.jboss.fuse.forge.addon.ui.FuseProjectCategory.KARAF;
 import static org.jboss.fuse.forge.addon.ui.FuseProjectCategory.SPRING_BOOT;
@@ -97,6 +97,10 @@ public class FuseProjectSetupStep extends AbstractUICommand implements UIWizardS
     public void initializeUI(UIBuilder builder) throws Exception {
         Coordinate coordinate = MavenUtils.createCoordinate(ARCHETYPE_CATALOG_GROUP_ID, ARCHETYPE_CATALOG_ARTIFACT_ID);
         archetypeVersions = MavenUtils.resolveVersions(resolver, coordinate);
+        if (archetypeVersions.isEmpty()) {
+            throw new IllegalStateException(String.format("Missing archetype catalog %s:%s, please add JBoss Fuse Maven repository to your Maven configuration",
+                ARCHETYPE_CATALOG_GROUP_ID, ARCHETYPE_CATALOG_ARTIFACT_ID));
+        }
 
         configureProjectTypeInput();
         configureCatalogVersionInput();

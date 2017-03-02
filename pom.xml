@@ -49,10 +49,10 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
 
-    <forge.version>3.3.2.Final</forge.version>
-    <furnace.version>2.24.1.Final</furnace.version>
+    <forge.version>3.5.1.Final</forge.version>
+    <furnace.version>2.25.2.Final</furnace.version>
     <jboss.javaee.version>3.0.3.Final</jboss.javaee.version>
-    <slf4j.version>1.7.12</slf4j.version>
+    <slf4j.version>1.7.13</slf4j.version>
 
     <!-- Maven plugins -->
     <jar.maven.plugin.version>3.0.2</jar.maven.plugin.version>
